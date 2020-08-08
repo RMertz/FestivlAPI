@@ -41,3 +41,17 @@ final class FestivalDTO: Model {
 extension FestivalDTO: Referencable {
     static var referenceKey: FieldKey = "festival_id"
 }
+
+struct CreateFestival: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(FestivalDTO.schema)
+            .id()
+            .field(.name, .string, .required)
+            .timeStampFields()
+            .create()
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(FestivalDTO.schema).delete()
+    }
+}

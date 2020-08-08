@@ -21,7 +21,7 @@ final class StageDTO: Model {
     var color: String
 
     @Field(key: .iconImageURL)
-    var iconImageURL: String
+    var iconImageURL: String?
 
     // MARK: Housekeeping
     @Timestamp(key: .createdAt, on: .create)
@@ -50,4 +50,20 @@ extension StageDTO: Referencable {
 extension FieldKey {
     static var color: Self = "color"
     static var iconImageURL: Self = "icon_image_url"
+}
+
+struct CreateStage: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(StageDTO.schema)
+            .id()
+            .field(.name, .string, .required)
+            .field(.color, .string, .required)
+            .field(.iconImageURL, .string)
+            .timeStampFields()
+            .create()
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(StageDTO.schema).delete()
+    }
 }

@@ -50,3 +50,23 @@ extension FestivalIterationDTO: Referencable {
     static var referenceKey: FieldKey = "festival_iteration_id"
 }
 
+struct CreateFestivalIteration: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(FestivalIterationDTO.schema)
+            .id()
+            .field(.startDate, .datetime, .required)
+            .field(.endDate, .datetime, .required)
+            .field(
+                FestivalDTO.referenceKey,
+                .uuid,
+                .references(FestivalDTO.schema, .id),
+                .required
+            )
+            .timeStampFields()
+            .create()
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(FestivalIterationDTO.schema).delete()
+    }
+}

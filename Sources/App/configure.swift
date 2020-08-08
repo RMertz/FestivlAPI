@@ -9,8 +9,17 @@ public func configure(_ app: Application) throws {
 
     app.databases.use(.sqlite(.file("db.sqlite")), as: .sqlite)
 
-    app.migrations.add(CreateFestival())
+    addMigrations(app)
 
     // register routes
     try routes(app)
+}
+
+private func addMigrations(_ app: Application) {
+    app.migrations.add(CreateFestival())
+    app.migrations.add(CreateFestivalIteration())
+    app.migrations.add(CreateArtist())
+    app.migrations.add(CreateArtistSet())
+    app.migrations.add(CreateStage())
+    app.migrations.add(CreateStageFestivalIterationPivot())
 }

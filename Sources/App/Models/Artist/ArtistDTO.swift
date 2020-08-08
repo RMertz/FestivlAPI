@@ -71,3 +71,30 @@ extension FieldKey {
     static var websiteURL: Self = "website_url"
     static var spotifyURL: Self = "spotify_url"
 }
+
+
+struct CreateArtist: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(ArtistDTO.schema)
+            .id()
+            .field(.name, .string, .required)
+            .field(.description, .string, .required)
+            .field(.tier, .int8)
+            .field(.soundcloudURL, .string)
+            .field(.websiteURL, .string)
+            .field(.spotifyURL, .string)
+            .field(
+                FestivalDTO.referenceKey,
+               .uuid,
+               .references(FestivalIterationDTO.schema, .id),
+               .required
+            )
+            .timeStampFields()
+            .create()
+
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        return database.schema(ArtistDTO.schema).delete()
+    }
+}

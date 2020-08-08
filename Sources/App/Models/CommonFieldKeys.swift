@@ -24,6 +24,4 @@ extension FieldKey {
     static var createdAt: Self = "created_at"
     static var updatedAt: Self = "updated_at"
     static var deletedAt: Self = "deleted_at"
-
-
 }

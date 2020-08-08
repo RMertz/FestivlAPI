@@ -38,3 +38,29 @@ final class StageFestivalIterationPivot: Model {
         self.$festivalIteration.id = try stage.requireID()
     }
 }
+
+struct CreateStageFestivalIterationPivot: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+
+        database.schema(StageFestivalIterationPivot.schema)
+            .id()
+            .field(
+                StageDTO.referenceKey,
+                .uuid,
+                .references(StageDTO.schema, .id),
+                .required
+            )
+            .field(
+                FestivalIterationDTO.referenceKey,
+                .uuid,
+                .references(FestivalIterationDTO.schema, .id),
+                .required
+            )
+            .timeStampFields()
+            .create()
+    }
+
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        database.schema(StageFestivalIterationPivot.schema).delete()
+    }
+}
