@@ -52,29 +52,33 @@ extension FieldKey {
     static var stageID: Self = "stage_id"
 }
 
-struct CreateArtistSet: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(ArtistSetDTO.schema)
-        .id()
-        .field(
-            ArtistDTO.referenceKey,
-            .uuid,
-            .references(ArtistDTO.schema, .id),
-            .required
-        )
-        .field(
-            StageDTO.referenceKey,
-            .uuid,
-            .references(StageDTO.schema, .id),
-            .required
-        )
-        .field(.startTime, .datetime, .required)
-        .field(.endTime, .datetime, .required)
-        .timeStampFields()
-        .create()
-    }
+// MARK: Migrations
+extension ArtistSetDTO {
+    struct Migration: Fluent.Migration {
+        func prepare(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(ArtistSetDTO.schema)
+            .id()
+            .field(
+                ArtistDTO.referenceKey,
+                .uuid,
+                .references(ArtistDTO.schema, .id),
+                .required
+            )
+            .field(
+                StageDTO.referenceKey,
+                .uuid,
+                .references(StageDTO.schema, .id),
+                .required
+            )
+            .field(.startTime, .datetime, .required)
+            .field(.endTime, .datetime, .required)
+            .timeStampFields()
+            .create()
+        }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(ArtistSetDTO.schema).delete()
+        func revert(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(ArtistSetDTO.schema).delete()
+        }
     }
 }
+

@@ -52,18 +52,22 @@ extension FieldKey {
     static var iconImageURL: Self = "icon_image_url"
 }
 
-struct CreateStage: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(StageDTO.schema)
-            .id()
-            .field(.name, .string, .required)
-            .field(.color, .string, .required)
-            .field(.iconImageURL, .string)
-            .timeStampFields()
-            .create()
-    }
+extension StageDTO {
+    struct Migration: Fluent.Migration {
+        func prepare(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(StageDTO.schema)
+                .id()
+                .field(.name, .string, .required)
+                .field(.color, .string, .required)
+                .field(.iconImageURL, .string)
+                .timeStampFields()
+                .create()
+        }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(StageDTO.schema).delete()
+        func revert(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(StageDTO.schema).delete()
+        }
     }
 }
+
+

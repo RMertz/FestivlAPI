@@ -8,18 +8,18 @@
 import Fluent
 import Vapor
 
-/// An single happening of a festival, usually yearly.
+/// An single happening of a event, usually yearly.
 final class FestivalIterationDTO: Model {
     static let schema: String = "festival_iterations"
 
     @ID()
     var id: UUID?
 
-    /// The start date of the "Events" of the festival
+    /// The start date of the sets of the festival
     @Field(key: .startDate)
     var startDate: Date
 
-    /// The end date of the "Events" of the festival
+    /// The end date of the sets of the festival
     @Field(key: .endDate)
     var endDate: Date
 
@@ -50,23 +50,26 @@ extension FestivalIterationDTO: Referencable {
     static var referenceKey: FieldKey = "festival_iteration_id"
 }
 
-struct CreateFestivalIteration: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(FestivalIterationDTO.schema)
-            .id()
-            .field(.startDate, .datetime, .required)
-            .field(.endDate, .datetime, .required)
-            .field(
-                FestivalDTO.referenceKey,
-                .uuid,
-                .references(FestivalDTO.schema, .id),
-                .required
-            )
-            .timeStampFields()
-            .create()
-    }
+extension FestivalIterationDTO {
+    struct Migration: Fluent.Migration {
+        func prepare(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(FestivalIterationDTO.schema)
+                .id()
+                .field(.startDate, .datetime, .required)
+                .field(.endDate, .datetime, .required)
+                .field(
+                    FestivalDTO.referenceKey,
+                    .uuid,
+                    .references(FestivalDTO.schema, .id),
+                    .required
+                )
+                .timeStampFields()
+                .create()
+        }
 
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(FestivalIterationDTO.schema).delete()
+        func revert(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(FestivalIterationDTO.schema).delete()
+        }
     }
 }
+

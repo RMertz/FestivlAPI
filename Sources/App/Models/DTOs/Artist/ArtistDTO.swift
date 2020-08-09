@@ -9,7 +9,7 @@ import Fluent
 import Vapor
 
 final class ArtistDTO: Model {
-    static let schema: String = "artist"
+    static let schema: String = "artists"
 
     @ID()
     var id: UUID?
@@ -72,29 +72,31 @@ extension FieldKey {
     static var spotifyURL: Self = "spotify_url"
 }
 
+extension ArtistDTO {
+    struct Migration: Fluent.Migration {
+        func prepare(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(ArtistDTO.schema)
+                .id()
+                .field(.name, .string, .required)
+                .field(.description, .string, .required)
+                .field(.tier, .int8)
+                .field(.soundcloudURL, .string)
+                .field(.websiteURL, .string)
+                .field(.spotifyURL, .string)
+                .field(
+                    FestivalDTO.referenceKey,
+                   .uuid,
+                   .references(FestivalIterationDTO.schema, .id),
+                   .required
+                )
+                .timeStampFields()
+                .create()
 
-struct CreateArtist: Migration {
-    func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(ArtistDTO.schema)
-            .id()
-            .field(.name, .string, .required)
-            .field(.description, .string, .required)
-            .field(.tier, .int8)
-            .field(.soundcloudURL, .string)
-            .field(.websiteURL, .string)
-            .field(.spotifyURL, .string)
-            .field(
-                FestivalDTO.referenceKey,
-               .uuid,
-               .references(FestivalIterationDTO.schema, .id),
-               .required
-            )
-            .timeStampFields()
-            .create()
+        }
 
-    }
-
-    func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema(ArtistDTO.schema).delete()
+        func revert(on database: Database) -> EventLoopFuture<Void> {
+            return database.schema(ArtistDTO.schema).delete()
+        }
     }
 }
+
