@@ -10,6 +10,9 @@ func routes(_ app: Application) throws {
         return "Hello, world!"
     }
 
+    let apiRoutes = app.grouped("api", "v1")
+
     //try app.register(collection: TodoController())
-    try app.register(collection: UserController())
+    try apiRoutes.register(collection: UserController())
+    try apiRoutes.register(collection: FestivalController())
 }

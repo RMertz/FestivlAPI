@@ -12,6 +12,7 @@ extension FieldKey {
     // MARK: Common
     static var name: Self = "name"
     static var description: Self = "description"
+    static var urlName: Self = "url_name"
 
     // MARK: Times
     static var startTime: Self = "start_time"

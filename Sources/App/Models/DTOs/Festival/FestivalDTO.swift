@@ -17,6 +17,9 @@ final class FestivalDTO: Model {
     @Field(key: .name)
     var name: String
 
+    @Field(key: .urlName)
+    var urlName: String
+
     @Children(for: \.$festival)
     var iterations: [FestivalIterationDTO]
 
@@ -32,9 +35,16 @@ final class FestivalDTO: Model {
 
     init() { }
 
-    init(id: UUID? = nil, name: String) {
+    init(id: UUID? = nil, name: String, urlName: String) {
         self.id = id
         self.name = name
+        self.urlName = urlName
+    }
+
+    init(from viewModel: Festival) {
+        self.id = viewModel.id
+        self.name = viewModel.name
+        self.urlName = viewModel.urlName
     }
 }
 
@@ -49,7 +59,9 @@ extension FestivalDTO {
             return database.schema(FestivalDTO.schema)
                 .id()
                 .field(.name, .string, .required)
+                .field(.urlName, .string, .required)
                 .timeStampFields()
+                .unique(on: .urlName)
                 .create()
         }
 

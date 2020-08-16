@@ -15,6 +15,9 @@ final class FestivalIterationDTO: Model {
     @ID()
     var id: UUID?
 
+    @Field(key: .urlName)
+    var urlName: String
+
     /// The start date of the sets of the festival
     @Field(key: .startDate)
     var startDate: Date
@@ -25,6 +28,9 @@ final class FestivalIterationDTO: Model {
 
     @Parent()
     var festival: FestivalDTO
+
+    @Siblings(through: StageFestivalIterationPivot.self, from: \.$festivalIteration, to: \.$stage)
+    var stages: [StageDTO]
 
     // MARK: Housekeeping
     @Timestamp(key: .createdAt, on: .create)
@@ -55,6 +61,7 @@ extension FestivalIterationDTO {
         func prepare(on database: Database) -> EventLoopFuture<Void> {
             return database.schema(FestivalIterationDTO.schema)
                 .id()
+                .field(.urlName, .string, .required)
                 .field(.startDate, .datetime, .required)
                 .field(.endDate, .datetime, .required)
                 .field(
@@ -64,6 +71,7 @@ extension FestivalIterationDTO {
                     .required
                 )
                 .timeStampFields()
+                .unique(on: FestivalDTO.referenceKey, .urlName) // Each festival can't have multiple iterations named the same thing, so we can reference like /festivalName/2020/
                 .create()
         }
 
