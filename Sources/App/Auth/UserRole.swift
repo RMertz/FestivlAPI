@@ -13,6 +13,7 @@ enum UserRole: String, Codable {
 
     case accountOwner
     case editor
+    case notAuthorized // Not stored in database
 }
 
 extension UserRole {

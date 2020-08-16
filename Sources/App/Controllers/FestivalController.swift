@@ -8,7 +8,6 @@
 import Vapor
 
 struct FestivalController: RouteCollection {
-    let repository = FestivalRepository()
 
     func boot(routes: RoutesBuilder) throws {
         let publicRoutes = routes.grouped("festival")
@@ -21,16 +20,26 @@ struct FestivalController: RouteCollection {
     }
 
     private func getAllFestivals(req: Request) throws -> EventLoopFuture<[Festival]> {
-        return try repository.getAllFestivals(req: req)
+        return try req.festivalRepository.getAllFestivals()
     }
 
     private func createFestival(req: Request) throws -> EventLoopFuture<Festival> {
-        return try repository.createFestival(req: req)
+        let festival = try req.content.decode(Festival.self)
+        let user = try req.user()
+
+        return try req.festivalRepository.createFestival(festival).flatMap { festival in
+            do {
+                return try req.userRolesRepository.createUserRoleRoleForFestival(user: user, festival: festival, role: .accountOwner)
+                    .map { _ in festival }
+            } catch {
+                return req.eventLoop.makeFailedFuture(error)
+            }
+        }
     }
 
     private func getFestival(req: Request) throws -> EventLoopFuture<Festival> {
         guard let name = req.parameters.get("name") else { throw Abort(.badRequest) }
 
-        return try repository.getFestival(req: req, festivalName: name)
+        return try req.festivalRepository.getFestival(festivalName: name)
     }
 }

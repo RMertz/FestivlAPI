@@ -25,5 +25,5 @@ private func addMigrations(_ app: Application) {
     app.migrations.add(User.Migration())
     app.migrations.add(UserToken.Migration())
     app.migrations.add(UserRole.Migration())
-    app.migrations.add(FestivalUserRoles.Migration())
+    app.migrations.add(FestivalUserRole.Migration())
 }

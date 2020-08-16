@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final class FestivalUserRoles: Model {
+final class FestivalUserRole: Model {
     static let schema = "festival+user+roles"
 
     @ID()
@@ -38,11 +38,11 @@ extension FieldKey {
     static var role: Self = "role"
 }
 
-extension FestivalUserRoles {
+extension FestivalUserRole {
     struct Migration: Fluent.Migration {
 
         func prepare(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(FestivalUserRoles.schema)
+            database.schema(FestivalUserRole.schema)
                 .id()
                 .field(.role, .string, .required)
                 .field(
@@ -61,7 +61,7 @@ extension FestivalUserRoles {
         }
 
         func revert(on database: Database) -> EventLoopFuture<Void> {
-            database.schema(FestivalUserRoles.schema).delete()
+            database.schema(FestivalUserRole.schema).delete()
         }
     }
 

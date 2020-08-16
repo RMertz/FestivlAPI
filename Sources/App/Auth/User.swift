@@ -99,3 +99,8 @@ extension User {
     }
 }
 
+extension Request {
+    func user() throws -> User {
+        return try self.auth.require(User.self)
+    }
+}
