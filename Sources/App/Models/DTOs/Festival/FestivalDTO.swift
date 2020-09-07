@@ -7,6 +7,7 @@
 
 import Fluent
 import Vapor
+import FestivlCore
 
 final class FestivalDTO: Model {
     static let schema = "festivals"

@@ -6,8 +6,10 @@
 //
 
 import Fluent
+import Foundation
+import FestivlCore
 
 protocol UserRolesRepository: FestivlRepository {
-    func userRoleForFestival(user: User, festival: Festival) throws -> EventLoopFuture<UserRole>
+    func userRoleForFestivalID(user: User, festivalID: UUID) throws -> EventLoopFuture<UserRole>
     func createUserRoleRoleForFestival(user: User, festival: Festival, role: UserRole) throws -> EventLoopFuture<FestivalUserRole>
 }

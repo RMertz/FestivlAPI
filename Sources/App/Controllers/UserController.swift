@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import FestivlCore
 
 struct UserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {

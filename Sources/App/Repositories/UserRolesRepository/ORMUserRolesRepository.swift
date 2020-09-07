@@ -7,6 +7,7 @@
 
 import Vapor
 import Fluent
+import FestivlCore
 
 struct ORMUserRolesRepository: UserRolesRepository {
     let req: Request
@@ -15,10 +16,12 @@ struct ORMUserRolesRepository: UserRolesRepository {
         return ORMUserRolesRepository(req: request)
     }
 
-    func userRoleForFestival(user: User, festival: Festival) throws -> EventLoopFuture<UserRole> {
+    func userRoleForFestivalID(user: User, festivalID: UUID) throws -> EventLoopFuture<UserRole> {
         try FestivalUserRole.query(on: req.db)
-            .filter(\.festival.$id == FestivalDTO(from: festival).requireID())
-            .filter(\.user.$id == user.requireID())
+            .with(\.$festival)
+            .with(\.$user)
+            .filter(\.$festival.$id == festivalID)
+            .filter(\.$user.$id == user.requireID())
             .first()
             .map { userRole in
                 return userRole?.role ?? .notAuthorized
@@ -28,8 +31,6 @@ struct ORMUserRolesRepository: UserRolesRepository {
     func createUserRoleRoleForFestival(user: User, festival: Festival, role: UserRole) throws -> EventLoopFuture<FestivalUserRole> {
         let role = try FestivalUserRole(festival: FestivalDTO(from: festival), user: user, role: role)
 
-        return try role.create(on: req.db).map {
-            role
-        }
+        return role.create(on: req.db).map { role }
     }
 }

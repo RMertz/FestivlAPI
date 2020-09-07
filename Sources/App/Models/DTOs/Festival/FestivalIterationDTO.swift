@@ -7,6 +7,7 @@
 
 import Fluent
 import Vapor
+import FestivlCore
 
 /// An single happening of a event, usually yearly.
 final class FestivalIterationDTO: Model {
@@ -49,6 +50,14 @@ final class FestivalIterationDTO: Model {
         self.startDate = startDate
         self.endDate = endDate
         self.$festival.id = try festival.requireID()
+    }
+
+    init(from viewModel: FestivalIteration) throws {
+        self.id = viewModel.id
+        self.urlName = viewModel.urlName
+        self.startDate = viewModel.startDate
+        self.endDate = viewModel.endDate
+        self.$festival.id = viewModel.festivalID
     }
 }
 

@@ -7,6 +7,7 @@
 
 import Fluent
 import Vapor
+import FestivlCore
 
 final class User: Model, Content {
     static let schema = "users"

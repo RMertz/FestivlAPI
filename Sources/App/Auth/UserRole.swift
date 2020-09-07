@@ -30,3 +30,15 @@ extension UserRole {
         }
     }
 }
+
+// MARK: Abilities
+extension UserRole {
+    var mayCreateIterations: Bool {
+        switch self {
+        case .accountOwner, .editor:
+            return true
+        case .notAuthorized:
+            return false
+        }
+    }
+}
