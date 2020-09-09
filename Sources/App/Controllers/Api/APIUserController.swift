@@ -8,7 +8,7 @@
 import Vapor
 import FestivlCore
 
-struct UserController: RouteCollection {
+struct APIUserController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let publicRoutes = routes.grouped("user")
         let passwordProtected = publicRoutes.grouped(User.authenticator())

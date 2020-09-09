@@ -8,7 +8,7 @@
 import Vapor
 import FestivlCore
 
-struct FestivalController: RouteCollection {
+struct APIFestivalController: RouteCollection {
 
     func boot(routes: RoutesBuilder) throws {
         let publicRoutes = routes.grouped("festival")
