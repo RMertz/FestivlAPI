@@ -15,7 +15,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
 
         // Core
-        .package(url: "https://github.com/Festivl/festivl-core", from: "0.0.0")
+        .package(url: "https://github.com/Festivl/festivl-core", from: "0.0.4")
     ],
     targets: [
         .target(

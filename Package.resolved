@@ -29,12 +29,12 @@
         }
       },
       {
-        "package": "FestivlCore",
+        "package": "festivl-core",
         "repositoryURL": "https://github.com/Festivl/festivl-core",
         "state": {
           "branch": null,
-          "revision": "3d64c38cbd023f76415b0fbbc9802b720025917f",
-          "version": "0.0.1"
+          "revision": "ab86c17833a5cd02c6952a34979e2d26033304d1",
+          "version": "0.0.4"
         }
       },
       {
