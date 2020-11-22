@@ -1,0 +1,12 @@
+#extend("index"):
+    #export("body"):
+        <h1>#(festival.name)</h1>
+        <ul>
+            #for(iteration in festival.iterations):
+                <li>
+                    <h3><a href="#(festival.urlName)/#(iteration.urlName)">#(iteration.urlName)</a></h3>
+                </li>
+            #endfor
+        </ul>
+    #endexport
+#endextend

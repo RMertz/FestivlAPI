@@ -1,0 +1,7 @@
+#extend("index"):
+    #export("body"):
+        <h1>#(festival.name)</h1>
+        <h3>#(iteration.urlName)</h3>
+        <p>#date(iteration.startDate) - #date(iteration.endDate)</p>
+    #endexport
+#endextend
