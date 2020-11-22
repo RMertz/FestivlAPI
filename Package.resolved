@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "FestivlCore",
+        "repositoryURL": "https://github.com/Festivl/festivl-core",
+        "state": {
+          "branch": null,
+          "revision": "3d64c38cbd023f76415b0fbbc9802b720025917f",
+          "version": "0.0.1"
+        }
+      },
+      {
         "package": "fluent",
         "repositoryURL": "https://github.com/vapor/fluent.git",
         "state": {
@@ -44,6 +53,15 @@
           "branch": null,
           "revision": "8a20f1dd111fa715d60e79fcfc38d8229c88392e",
           "version": "1.6.0"
+        }
+      },
+      {
+        "package": "fluent-postgres-driver",
+        "repositoryURL": "https://github.com/vapor/fluent-postgres-driver.git",
+        "state": {
+          "branch": null,
+          "revision": "0a925f4c62bbd77665653e2dbce7217bbc5a971d",
+          "version": "2.1.1"
         }
       },
       {
@@ -71,6 +89,24 @@
           "branch": null,
           "revision": "a3623bd217d1c0327839afbc0bdc2351f7d06c1a",
           "version": "1.0.0-rc.1.17"
+        }
+      },
+      {
+        "package": "postgres-kit",
+        "repositoryURL": "https://github.com/vapor/postgres-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "13f6c735cf9a9053011d03e77e2a81802ad6c680",
+          "version": "2.3.0"
+        }
+      },
+      {
+        "package": "postgres-nio",
+        "repositoryURL": "https://github.com/vapor/postgres-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "3cf24967e54e3e63809593273b45b4e8135da6aa",
+          "version": "1.4.0"
         }
       },
       {
