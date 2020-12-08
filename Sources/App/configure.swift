@@ -29,9 +29,9 @@ public func configure(_ app: Application) throws {
 private func addMigrations(_ app: Application) {
     app.migrations.add(FestivalDTO.Migration())
     app.migrations.add(FestivalIterationDTO.Migration())
+    app.migrations.add(StageDTO.Migration())
     app.migrations.add(ArtistDTO.Migration())
     app.migrations.add(ArtistSetDTO.Migration())
-    app.migrations.add(StageDTO.Migration())
     app.migrations.add(StageFestivalIterationPivot.Migration())
     app.migrations.add(User.Migration())
     app.migrations.add(UserToken.Migration())
